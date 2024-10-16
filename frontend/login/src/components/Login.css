@@ -1,0 +1,85 @@
+/* Login.css */
+
+/* Container for the login form */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: #282828; /* Match the main game container color */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    width: 300px; /* Set a width for better alignment */
+    margin: auto; /* Center the container */
+  }
+  
+  /* Title styling */
+  .login-title {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #ff6b6b; /* Match the theme color */
+  }
+  
+  /* Error message styling */
+  .error-message {
+    color: red; /* Red color for error messages */
+    margin-bottom: 10px;
+  }
+  
+  /* Form styling */
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%; /* Full width */
+  }
+  
+  /* Input field styling */
+  .input-field {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    margin-bottom: 10px;
+    background-color: #333333; /* Dark input field */
+    color: #ffffff; /* White text for input */
+  }
+  
+  /* Submit button styling */
+  .submit-button {
+    padding: 10px;
+    background-color: #ff6b6b;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Submit button hover effect */
+  .submit-button:hover {
+    background-color: #ff8787;
+  }
+  
+  /* Signup prompt styling */
+  .signup-prompt {
+    margin-top: 15px;
+    font-size: 1rem;
+  }
+  
+  /* Signup button styling */
+  .signup-button {
+    background: none; /* No background */
+    color: #ff6b6b; /* Match theme color */
+    border: none; /* No border */
+    cursor: pointer; /* Pointer cursor */
+    margin-left: 5px;
+  }
+  
+  /* Signup button hover effect */
+  .signup-button:hover {
+    text-decoration: underline; /* Underline on hover */
+  }
+  
