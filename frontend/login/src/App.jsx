@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Login from './components/Login';
+import Login from './components/login';
 import SignUp from './components/signup';
 import Welcome from './components/Welcome';
 import ProtectedElement from './utils/ProtectedElement'; // Import the ProtectedElement
