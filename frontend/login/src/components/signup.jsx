@@ -1,11 +1,13 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 function SignUp() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');  // New state for success messages
+    const navigate = useNavigate(); // Initialize useNavigate hook
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -19,6 +21,7 @@ function SignUp() {
             });
             if (response.data.message) {
                 setSuccess(response.data.message); // Set success message on successful sign up
+                 navigate('/login');
             }
         } catch (err) {
             // Display the error message returned from the server if available
