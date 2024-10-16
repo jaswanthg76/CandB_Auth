@@ -23,7 +23,7 @@ app.add_middleware(
 
 # Database setup (replace with your MongoDB connection string)
 client = MongoClient(
-    "mongodb+srv://sos1vardhankeerthi:12345@candb.whauc.mongodb.net/?retryWrites=true&w=majority&appName=CANDB")
+    "mongodb+srv://jaswanthg76:12345@cluster0.q6ud2.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 db = client.your_database_name
 users_collection = db.users
 
@@ -59,6 +59,9 @@ class AuthHandler:
 
 auth_handler = AuthHandler()
 
+@app.get("/")
+async def read_root():
+    return {"message": "Hello World"}
 
 @app.post('/signup')
 async def sign_up(user: UserSignUp):

@@ -7,9 +7,11 @@ function Login() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
-
+    localStorage.removeItem('token');
     const handleSubmit = async (e) => {
         e.preventDefault();
+        
+        setError('');
         try {
             const res = await axios.post('http://localhost:8000/login', { username, password });
             if (res.data.token) {
@@ -20,6 +22,7 @@ function Login() {
             setError(error.response?.data?.detail || 'Something went wrong');
         }
     };
+
 
     return (
         <div>
