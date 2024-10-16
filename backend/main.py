@@ -40,6 +40,10 @@ class UserLogin(BaseModel):
     username: str
     password: str
 
+class GameStats(BaseModel):
+    username: str
+    guesses: int
+
 
 class AuthHandler:
     def get_password_hash(self, password: str):
@@ -71,6 +75,9 @@ async def sign_up(user: UserSignUp):
     hashed_password = auth_handler.get_password_hash(user.password)
     user_dict = user.dict()
     user_dict['password'] = hashed_password
+    user_dict['games_played']=0
+    user_dict['total_guesses']=0
+    user_dict['guess_history']=[]
     users_collection.insert_one(user_dict)
     return {"message": "User created successfully"}
 
@@ -84,3 +91,59 @@ async def login(user: UserLogin):
         return {"token": token}
 
     raise HTTPException(status_code=401, detail="Invalid username or password")
+
+@app.post('/game_stats')
+async def update_stats(user: GameStats):
+    username = user.username
+    guesses= user.guesses
+    user = users_collection.find_one({"username": username})
+
+    if user:
+        new_games_played = user['games_played'] + 1
+
+        new_total_guesses = user['total_guesses'] + guesses
+       
+        guess_history = user['guess_history']
+        guess_history.append(guesses)
+
+        avg_guesses = new_total_guesses / new_games_played
+
+        users_collection.update_one(
+            {"username": username},
+            {
+                "$set": {
+                    "games_played": new_games_played,
+                    "total_guesses": new_total_guesses,
+                    "guess_history": guess_history
+                }
+            }
+        )
+        return {
+            "message": "Stats updated",
+            "avg_guesses": avg_guesses,
+            "games_played":new_games_played,
+            "guess_history":guess_history
+        }
+
+    raise HTTPException(status_code=404, detail="User not found")
+
+
+@app.get('/user_stats')
+async def get_user_stats(username: str ):
+    
+    user = users_collection.find_one({"username": username})
+    
+    if user:
+        user['_id'] = str(user['_id'])
+        if(user['games_played']==0):
+          avg_guesses = 0
+        else:
+          avg_guesses=user['total_guesses'] / user['games_played']
+        return{
+            "games_played": user['games_played'],
+            "avg_guesses":  avg_guesses,
+            "guess_history": user['guess_history']
+           
+        }
+
+    raise HTTPException(status_code=404, detail="User not found")

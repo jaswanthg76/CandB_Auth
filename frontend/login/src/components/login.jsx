@@ -1,13 +1,17 @@
+// src/components/Login.jsx
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+
 function Login() {
-    const [username, setUsername] = useState('');
+    const [username, setUsernameState] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
-    localStorage.removeItem('token');
+    
+    localStorage.removeItem('token'); // Clear the token on component mount
+    localStorage.removeItem('username');
     const handleSubmit = async (e) => {
         e.preventDefault();
         
@@ -16,13 +20,14 @@ function Login() {
             const res = await axios.post('http://localhost:8000/login', { username, password });
             if (res.data.token) {
                 localStorage.setItem('token', res.data.token);
+                localStorage.setItem('username',username);
+               
                 navigate('/welcome');
             }
         } catch (error) {
             setError(error.response?.data?.detail || 'Something went wrong');
         }
     };
-
 
     return (
         <div>
@@ -32,7 +37,7 @@ function Login() {
                 <input
                     type="text"
                     value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    onChange={(e) => setUsernameState(e.target.value)}
                     placeholder="Username"
                 />
                 <input

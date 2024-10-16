@@ -133,6 +133,16 @@ body {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
+.stats-button {
+  padding: 10px 20px;
+  background-color: #ff6b6b;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
 /* Reset button hover effect */
 .reset-button:hover {
