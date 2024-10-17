@@ -1,18 +1,19 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
+import './Signup.css'
 
 function SignUp() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const [success, setSuccess] = useState('');  // New state for success messages
-    const navigate = useNavigate(); // Initialize useNavigate hook
+    const [success, setSuccess] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError(''); // Clear previous errors
-        setSuccess(''); // Clear previous success message
+        setError('');
+        setSuccess('');
 
         try {
             const response = await axios.post('http://localhost:8000/signup', {
@@ -20,38 +21,45 @@ function SignUp() {
                 password
             });
             if (response.data.message) {
-                setSuccess(response.data.message); // Set success message on successful sign up
-                 navigate('/login');
+                setSuccess(response.data.message);
+                navigate('/login');
             }
         } catch (err) {
-            // Display the error message returned from the server if available
             setError(err.response?.data?.detail || "Failed to sign up. Please try again.");
             console.error(err);
         }
     };
 
     return (
-        <div>
-            <h2>Sign Up</h2>
+        <div className="signup-container">
+            <h2 className="title">Sign Up</h2>
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     placeholder="Username"
-                    required // Ensure this field is filled
+                    className="input-box"
+                    required
                 />
                 <input
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Password"
-                    required // Ensure this field is filled
+                    className="input-box"
+                    required
                 />
-                <button type="submit">Sign Up</button>
+                <button type="submit" className="guess-button">Sign Up</button>
             </form>
-            {success && <p style={{ color: 'green' }}>{success}</p>} {/* Success message */}
-            {error && <p style={{ color: 'red' }}>{error}</p>} {/* Error message */}
+            <p className="signup-prompt">
+                Already have an account?
+                <button onClick={() => navigate('/login')} className="signup-button">
+                    Log In
+                </button>
+            </p>
+            {success && <p style={{ color: 'green' }}>{success}</p>}
+            {error && <p style={{ color: 'red' }}>{error}</p>}
         </div>
     );
 }

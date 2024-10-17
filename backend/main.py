@@ -43,6 +43,7 @@ class UserLogin(BaseModel):
 class GameStats(BaseModel):
     username: str
     guesses: int
+    Boolwin: bool
     
 
 
@@ -79,8 +80,8 @@ async def sign_up(user: UserSignUp):
     user_dict['games_played']=0
     user_dict['total_guesses']=0
     user_dict['guess_history']=[]
-    # user_dict['wins']=0
-    # user_dict['loses']=0
+    user_dict['wins']=0
+    user_dict['losses']=0
     users_collection.insert_one(user_dict)
     return {"message": "User created successfully"}
 
@@ -99,13 +100,21 @@ async def login(user: UserLogin):
 async def update_stats(user: GameStats):
     username = user.username
     guesses= user.guesses
+    Boolwin= user.Boolwin
+
     user = users_collection.find_one({"username": username})
 
     if user:
         new_games_played = user['games_played'] + 1
 
         new_total_guesses = user['total_guesses'] + guesses
-       
+        if(Boolwin):
+         new_win_count = user['wins'] +1 
+         new_loss_count =user['losses']
+        else:
+         new_win_count = user['wins']
+         new_loss_count =user['losses']+1
+           
         guess_history = user['guess_history']
         guess_history.append(guesses)
 
@@ -117,7 +126,9 @@ async def update_stats(user: GameStats):
                 "$set": {
                     "games_played": new_games_played,
                     "total_guesses": new_total_guesses,
-                    "guess_history": guess_history
+                    "guess_history": guess_history,
+                    "wins":new_win_count,
+                    "losses":new_loss_count
                 }
             }
         )
@@ -143,9 +154,12 @@ async def get_user_stats(username: str ):
         else:
           avg_guesses=user['total_guesses'] / user['games_played']
         return{
+            "username":user['username'],
             "games_played": user['games_played'],
             "avg_guesses":  avg_guesses,
-            "guess_history": user['guess_history']
+            "guess_history": user['guess_history'],
+            "wins":user['wins'],
+            "losses":user['losses']
            
         }
 
