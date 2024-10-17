@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css'; // Import the CSS file for styles
 import cowImage from './images/cow.png'; // Import cow image
 import bullImage from './images/bull.png'; // Import bull image
+import UpdateStats from './UpdateStats';
 
 const generateNumber = () => {
   let digits = [];
@@ -39,6 +40,10 @@ const CowsAndBullsGame = () => {
   const [history, setHistory] = useState([]);
   const [attemptsLeft, setAttemptsLeft] = useState(5);
   const [message, setMessage] = useState('');
+  
+  const guessCount=5-attemptsLeft;
+  const username = localStorage.getItem('username'); 
+
 
   useEffect(() => {
     console.log("Secret Number: ", secretNumber); // For testing/debugging
@@ -115,9 +120,11 @@ const CowsAndBullsGame = () => {
       </ul>
 
       <div className="button-container">
-        {(message.includes('lose') || message.includes('Congratulations')) && (
+        {(message.includes('lose') || message.includes('Congratulations')) && (<>
+          <UpdateStats username={username} guesses={guessCount}> </UpdateStats>
           <button className="reset-button" onClick={resetGame}>Reset Game</button>
-        )}
+        </>
+           )}
       </div>
     </div>
   );
