@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'; // Make sure axios is imported
 
-const UpdateStats = ({ username, guesses }) => {
+const UpdateStats = ({ username, guesses,Boolwin }) => {
   console.log(username);
   console.log(guesses);
   const [message, setMessage] = useState('');
@@ -11,7 +11,8 @@ const UpdateStats = ({ username, guesses }) => {
     try {
       const response = await axios.post('http://127.0.0.1:8000/game_stats', {
         username,
-        guesses
+        guesses,
+        Boolwin
       });
       
       if (response.data.message) {

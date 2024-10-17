@@ -4,6 +4,9 @@ import cowImage from './images/cow.png'; // Import cow image
 import bullImage from './images/bull.png'; // Import bull image
 import UpdateStats from './UpdateStats';
 
+import { useNavigate } from 'react-router-dom';
+
+
 const generateNumber = () => {
   let digits = [];
 
@@ -40,10 +43,12 @@ const CowsAndBullsGame = () => {
   const [history, setHistory] = useState([]);
   const [attemptsLeft, setAttemptsLeft] = useState(5);
   const [message, setMessage] = useState('');
+  const [win,setWin] = useState(false);
   
   const guessCount=5-attemptsLeft;
   const username = localStorage.getItem('username'); 
-
+  
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log("Secret Number: ", secretNumber); // For testing/debugging
@@ -63,6 +68,7 @@ const CowsAndBullsGame = () => {
 
     if (bulls === 3) {
       setMessage(`Congratulations! You guessed the number ${secretNumber}.`);
+      setWin(true);
     } else if (attemptsLeft - 1 === 0) {
       setMessage(`You lose! The correct number was ${secretNumber}.`);
     } else {
@@ -86,9 +92,10 @@ const CowsAndBullsGame = () => {
 
   return (
     <div className="game-container">
+      <button className="stats-button" onClick={() => navigate("/user_stats")}> Stats </button>
       <h1 className="title">Cows and Bulls Game</h1>
       <p className="description">Guess the 3-digit number (no repeated digits, first digit can't be 0).</p>
-
+     
       <div className="input-container">
         <input
           className="input-box"
@@ -121,7 +128,7 @@ const CowsAndBullsGame = () => {
 
       <div className="button-container">
         {(message.includes('lose') || message.includes('Congratulations')) && (<>
-          <UpdateStats username={username} guesses={guessCount}> </UpdateStats>
+          <UpdateStats username={username} guesses={guessCount} Boolwin={win}> </UpdateStats>
           <button className="reset-button" onClick={resetGame}>Reset Game</button>
         </>
            )}

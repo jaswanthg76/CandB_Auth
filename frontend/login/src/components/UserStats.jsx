@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import './UserStats.css'; // Import the CSS file
+import { useNavigate } from 'react-router-dom';
 
 const UserStats = () => {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const username = localStorage.getItem('username');
     const fetchUserStats = async () => {
@@ -29,8 +30,12 @@ const UserStats = () => {
 
   return (
     <div className="user-stats-container">
+      <button className="stats-button" onClick={() => navigate("/welcome")}> back </button>
       <h2 className="user-stats-title">User Stats</h2>
-      <p className="stats-item">Games Played: <span className="stats-value">{stats.games_played}</span></p>
+      <p className="stats-item"> <span className="stats-value">User: {stats.username}</span></p>
+      {/* <p className="stats-item">Games Played: <span className="stats-value">{stats.games_played}</span></p> */}
+      <p className="stats-item"> won: <span className="stats-value">{stats.wins}</span> lost: <span className="stats-value">{stats.losses}</span></p>
+      {/* <p className="stats-item"> lost: <span className="stats-value">{stats.losses}</span></p> */}
       <p className="stats-item">Average Guesses: <span className="stats-value">{stats.avg_guesses.toFixed(2)}</span></p>
       <h3 className="guess-history-title">Guess History</h3>
       <ul className="guess-history-list">
