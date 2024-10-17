@@ -5,6 +5,7 @@ import SignUp from './components/signup';
 import Welcome from './components/welcome';
 import UserStats from './components/UserStats'; // Import the UserStats component
 import ProtectedElement from './utils/ProtectedElement';
+import Leaderboard from './components/Leaderboard';
 
 
 function App() {
@@ -32,6 +33,15 @@ function App() {
                     element={
                         <ProtectedElement>
                             <UserStats/> 
+                        </ProtectedElement> 
+                    } 
+                />
+
+                  <Route 
+                    path="/leaderboard" 
+                    element={
+                        <ProtectedElement>
+                            <Leaderboard/> 
                         </ProtectedElement> 
                     } 
                 />
