@@ -43,6 +43,7 @@ class UserLogin(BaseModel):
 class GameStats(BaseModel):
     username: str
     guesses: int
+    
 
 
 class AuthHandler:
@@ -78,6 +79,8 @@ async def sign_up(user: UserSignUp):
     user_dict['games_played']=0
     user_dict['total_guesses']=0
     user_dict['guess_history']=[]
+    user_dict['wins']=0
+    user_dict['loses']=0
     users_collection.insert_one(user_dict)
     return {"message": "User created successfully"}
 
