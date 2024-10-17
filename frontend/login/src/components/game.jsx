@@ -4,7 +4,7 @@ import cowImage from './images/cow.png'; // Import cow image
 import bullImage from './images/bull.png'; // Import bull image
 import UpdateStats from './UpdateStats';
 
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 
 const generateNumber = () => {
@@ -48,7 +48,7 @@ const CowsAndBullsGame = () => {
   const guessCount=5-attemptsLeft;
   const username = localStorage.getItem('username'); 
   
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     console.log("Secret Number: ", secretNumber); // For testing/debugging
@@ -92,7 +92,7 @@ const CowsAndBullsGame = () => {
 
   return (
     <div className="game-container">
-      <button className="stats-button" onClick={() => navigate("/user_stats")}> Stats </button>
+      {/* <button className="stats-button" onClick={() => navigate("/user_stats")}> Stats </button> */}
       <h1 className="title">Cows and Bulls Game</h1>
       <p className="description">Guess the 3-digit number (no repeated digits, first digit can't be 0).</p>
      

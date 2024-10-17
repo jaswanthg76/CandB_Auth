@@ -164,3 +164,9 @@ async def get_user_stats(username: str ):
         }
 
     raise HTTPException(status_code=404, detail="User not found")
+
+@app.get('/leaderboard')
+async def get_leaderboard():
+    leaderboard = list(users_collection.find(
+        {}, {"username": 1, "wins": 1, "_id": 0}).sort("wins", -1))
+    return leaderboard
